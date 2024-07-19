@@ -1,17 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downdetector Status Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .loading {
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+    <div class="container">
+        <h1>Downdetector Status Checker</h1>
+        <p>Checking if Downdetector.co.uk is accessible...</p>
+        <div class="status loading" id="status">Loading...</div>
+    </div>
 
+    <script>
+        function checkDowndetectorStatus() {
+            fetch('https://downdetector.co.uk', { mode: 'no-cors' })
+                .then(() => {
+                    document.getElementById('status').innerText = "Downdetector.co.uk is UP!";
+                    document.getElementById('status').classList.remove('loading');
+                    document.getElementById('status').style.color = 'green';
+                })
+                .catch(() => {
+                    document.getElementById('status').innerText = "Downdetector.co.uk seems to be DOWN.";
+                    document.getElementById('status').classList.remove('loading');
+                    document.getElementById('status').style.color = 'red';
+                });
+        }
+
+        window.onload = checkDowndetectorStatus;
+    </script>
+</body>
 </html>
